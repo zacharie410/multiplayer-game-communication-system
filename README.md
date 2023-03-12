@@ -1,29 +1,65 @@
-MGCS API GUIDELINE
-Introduction:
-This API is designed to allow clients to interact with a server and perform certain functions through remote events and remote functions. It also includes a calculation system that can be run on both the server and the client.
+Multiplayer Game Communication System API Guidelines
 
-Functionality:
-The API allows clients to send RemoteEvents to the server and invoke RemoteFunctions on the server. The server processes these requests and calls the appropriate functions from the Events.lua and Functions.lua modules. Additionally, the server can call a calculation function from the Calculations.lua module either on the server or on an available client.
+Introduction
+The Multiplayer Game Communication System API Guidelines are designed to provide a structure for the development of multiplayer games. These guidelines outline a file and folder structure and provide guidance for client-server communication, security considerations, and best practices for module development.
 
-Usage:
-To use the API, the client should call the server's RemoteEvent or RemoteFunction with the appropriate event or function name and arguments. The server then processes the request and calls the appropriate function from the Events.lua or Functions.lua modules. The server can also call a calculation function from the Calculations.lua module either on the server or on an available client.
+File and Folder Structure
+The following file and folder structure is recommended for a multiplayer game communication system:
 
-Authentication:
-Each request must be authenticated by a token that identifies the client making the request. The token must be provided with each request, and the server will validate the token before processing the request. If the token is not valid, the server will reject the request and the client will be kicked from the game.
+Server
 
-Error Handling:
-If an error occurs during the processing of a request, the server will kick the client from the game and log the error. Clients should be prepared to handle errors and retry requests if necessary.
+index.lua (entry point for the server)
+modules/
+events.lua (module for server-side events)
+functions.lua (module for server-side functions)
+calculations.lua (module for shared calculations)
+services/
+database.lua (module for handling database interactions)
+shared/
+modules/
+utils.lua (module for commonly used utility functions)
+pathfinding.lua (module for pathfinding algorithms)
+physics.lua (module for handling physics and collisions)
+sound.lua (module for playing sound effects and music)
+animation.lua (module for controlling character animations)
+assets/
+[various assets]
+Client
 
-Conclusion:
-This API provides a simple and secure way for clients to interact with a server and perform certain functions. It is designed to be easy to use and provide robust error handling.
+index.lua (entry point for the client)
+modules/
+events.lua (module for client-side events)
+functions.lua (module for client-side functions)
+calculations.lua (module for shared calculations)
+services/
+server.lua (module for communicating with the server)
+ui/
+[various UI elements]
 
-Naming Convention
-Convention: camelCase
-Variables: use lowercase for the first word, and capitalize the first letter of each subsequent word.
-For example: playerName, healthPoints, inventoryList.
-Functions: use lowercase for the first word, and capitalize the first letter of each subsequent word.
-For example: getPlayerName(), updateHealthPoints(), addToInventoryList().
-Classes: use uppercase for the first letter of each word.
- For example: Player, Enemy, Item.
-Constants: use all uppercase letters with underscores between words.
- For example: MAX_HEALTH, DEFAULT_INVENTORY_SIZE, STARTING_PLAYER_POSITION.
+Communication System
+The following guidelines outline the recommended communication system for a multiplayer game:
+
+Each client will be assigned its own event and function listener objects.
+These listeners will also be used by the server to listen for signals from the assigned client.
+These listeners will also be used by the client to listen for signals from the server.
+If these listeners are used by another client, this means there has been a security breach. Deny this request and BAN the client which accessed a private listener.
+The server will have a honeypot containing signals with listeners which BAN the requester. Use names such as “Give Money”, “Kill All”, “Admin”. BAN any client which invokes these listeners.
+Security Considerations
+The following security considerations should be taken into account when developing a multiplayer game:
+
+Validate the caller's token and event existence before allowing the caller to invoke a function.
+If the caller and event are not valid, kick the caller for attempting to exploit.
+If the caller does not match the player, kick them for attempting to exploit.
+Validate the caller's token and calculation existence before allowing the caller to invoke a calculation.
+If the caller and calculation are not valid, kick the caller for attempting to exploit.
+If a client attempts to use a private listener, deny the request and ban the client.
+Best Practices for Module Development
+The following best practices should be followed when developing modules for a multiplayer game:
+
+Use a consistent naming convention for modules, functions, and events.
+Place modules in the appropriate folder structure based on their functionality.
+Avoid global variables as they can cause issues with variable scope and conflicts.
+Use the return statement to return values from functions and calculations.
+Use comments to explain the purpose and functionality of functions and calculations.
+Conclusion
+The Multiplayer Game Communication System API Guidelines provide a structure for developing multiplayer games. Following these guidelines will help ensure that your game is secure, scalable, and easy to maintain.
