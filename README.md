@@ -7,34 +7,36 @@ File and Folder Structure
 The following file and folder structure is recommended for a multiplayer game communication system:
 
 Server
+Private/
+    index.lua (entry point for the server)
+    modules/
+        events.lua (module for server-side events)
+        functions.lua (module for server-side functions)
+    services/
+        database.lua (module for handling database interactions)
+    assets/
+         [various assets]
 
-index.lua (entry point for the server)
-modules/
-events.lua (module for server-side events)
-functions.lua (module for server-side functions)
-calculations.lua (module for shared calculations)
-services/
-database.lua (module for handling database interactions)
-shared/
-modules/
-utils.lua (module for commonly used utility functions)
-pathfinding.lua (module for pathfinding algorithms)
-physics.lua (module for handling physics and collisions)
-sound.lua (module for playing sound effects and music)
-animation.lua (module for controlling character animations)
-assets/
-[various assets]
+Shared/
+    modules/
+        utils.lua (module for commonly used utility functions)
+        pathfinding.lua (module for pathfinding algorithms)
+        physics.lua (module for handling physics and collisions)
+        sound.lua (module for playing sound effects and music)
+        animation.lua (module for controlling character animations)
+        calculations.lua (module for shared calculations)
+        
 Client
 
 index.lua (entry point for the client)
 modules/
-events.lua (module for client-side events)
-functions.lua (module for client-side functions)
-calculations.lua (module for shared calculations)
+    events.lua (module for client-side events)
+    functions.lua (module for client-side functions)
+    calculations.lua (module for shared calculations)
 services/
-server.lua (module for communicating with the server)
+    server.lua (module for communicating with the server)
 ui/
-[various UI elements]
+    [various UI elements]
 
 Communication System
 The following guidelines outline the recommended communication system for a multiplayer game:
