@@ -62,5 +62,5 @@ ui/
 * Use the return statement to return values from functions and calculations.
 * Use comments to explain the purpose and functionality of functions and calculations.
 
-##Conclusion
+## Conclusion
 The Multiplayer Game Communication System API Guidelines provide a structure for developing multiplayer games. Following these guidelines will help ensure that your game is secure, scalable, and easy to maintain.
