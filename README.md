@@ -64,3 +64,42 @@ ui/
 
 ## Conclusion
 The Multiplayer Game Communication System API Guidelines provide a structure for developing multiplayer games. Following these guidelines will help ensure that your game is secure, scalable, and easy to maintain.
+
+---
+
+## What is a BindableEvent?
+A BindableEvent is a type of Roblox object that allows you to create an event that can be listened to by other objects in your game. You can think of a BindableEvent as a way for different parts of your game to communicate with each other.
+
+## Why use a BindableEvent to offload heavy AI calculations to clients?
+In a Roblox game with a lot of AI, it can be very resource-intensive to perform all of the necessary calculations on the server. By using a BindableEvent to offload some of these calculations to clients, you can reduce the amount of strain on your server and improve overall game performance.
+
+## How does it work?
+Here's an example of how you can use a BindableEvent to offload heavy AI calculations to clients:
+
+Create a BindableEvent in your server script. This event will be used to send calculation requests to clients.
+```
+local calculateListener = Instance.new("BindableEvent")
+calculateListener.Name = "CalculateListener"
+calculateListener.Parent = game.ServerScriptService
+Create a function in your client script that will listen for calculation requests from the server.
+lua
+Copy code
+local function onCalculateRequest(caller, functionName, ...)
+    -- Perform the necessary calculation using the provided arguments
+    local result = performCalculation(...)
+    
+    -- Send the result back to the server
+    return result
+end
+```
+Connect the function to the BindableEvent in your client script.
+```
+calculateListener.Event:Connect(onCalculateRequest)
+```
+In your server script, when you need to perform a heavy AI calculation, call the BindableEvent and pass in the necessary arguments.
+```
+calculateListener:FireAllClients(functionName, ...)
+```
+The onCalculateRequest function will be called on each client, and each client will perform the calculation using the provided arguments. The result will be returned to the server and can be used as needed.
+## Conclusion
+Using a BindableEvent to offload heavy AI calculations to clients is a powerful technique that can significantly improve game performance. By following the steps outlined in this guide, you can start using this technique in your own Roblox games.
